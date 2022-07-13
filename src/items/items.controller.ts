@@ -6,30 +6,30 @@ import {Item} from './interfaces/item.interface';
 
 @Controller('items')
 export class ItemsController {
-    constructor(private readonly itemsService: ItemsService){}
-    
-    @Get()
-    findAll(): Item[]{
-        return this.itemsService.findAll();
-    }
-    @Get(':id')
-    findOne(@Param('id') id): Item {
-        return this.itemsService.findOne(id);
-  } 
+  constructor(private readonly itemsService: ItemsService) {}
 
-    @Post()
-    create(@Body() CreateItemsDto: CreateItemsDto): string{
-        // return `Name: ${CreateItemsDto.name} Desc: ${CreateItemsDto.description}
-        return CreateItemsDto.description
-    }
+  @Get()
+  findAll(): Promise<Item[]> {
+    return this.itemsService.findAll();
+  }
 
-    @Delete()
-    delete(@Param('id') id): string{
-        return "Delete"
-    }
+  @Get(':id')
+  findOne(@Param('id') id): Promise<Item> {
+    return this.itemsService.findOne(id);
+  }
 
-    @Put(':id')
-    update(@Body() updateItemDto:CreateItemsDto, @Param('id') id): string{
-        return 'Update id'
-    }
+  @Post()
+  create(@Body() createItemDto: CreateItemsDto): Promise<Item> {
+    return this.itemsService.create(createItemDto);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id): Promise<Item> {
+    return this.itemsService.delete(id);
+  }
+
+  @Put(':id')
+  update(@Body() updateItemDto: CreateItemsDto, @Param('id') id): Promise<Item> {
+    return this.itemsService.update(id, updateItemDto);
+  }
 }
